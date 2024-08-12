@@ -11,20 +11,16 @@ const CreateProduct = () => {
     const formData = new FormData();
 
     Object.keys(values).forEach((key) => {
-      if (Array.isArray(values[key])) {
-        values[key].forEach((item) => formData.append(key, item));
+      if (key === "urls" && Array.isArray(values[key])) {
+        values[key].forEach((file) => {
+          formData.append("urls[]", file.originFileObj); // Use originFileObj to get the file object
+        });
       } else {
         formData.append(key, values[key]);
       }
     });
 
-    if (values.urls && values.urls.length > 0) {
-      values.urls.forEach((file) => {
-        formData.append("urls", file);
-      });
-    }
-
-    // Log FormData for debugging
+    // Debug: Log FormData entries
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
@@ -110,10 +106,13 @@ const CreateProduct = () => {
           label="Images"
           name="urls"
           valuePropName="fileList"
-          getValueFromEvent={(e) => e && e.fileList}
+          getValueFromEvent={(e) => {
+            return e && Array.isArray(e.fileList) ? e.fileList : [];
+          }}
         >
           <Input type="file" multiple />
         </Form.Item>
+
         <Button className="w-full" type="primary" htmlType="submit">
           {isLoading ? "Loading..." : "Create"}
         </Button>
