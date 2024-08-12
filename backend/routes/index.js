@@ -8,7 +8,7 @@ import { ownerMiddleware } from "../middleware/owner-middleware.js";
 const router = express.Router();
 
 router.get("/api/blogs", [auth, adminMiddleware], BlogsController.get);
-router.post("/api/blogs", [auth, ownerMiddleware], BlogsController.create);
+router.post("/api/blogs", [auth, adminMiddleware], BlogsController.create);
 router.patch("/api/blogs/:id", BlogsController.updateBlog);
 router.delete("/api/blogs/:id", BlogsController.delete);
 
