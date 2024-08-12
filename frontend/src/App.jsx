@@ -1,6 +1,9 @@
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import CreateProduct from "./pages/dashboard/create-product/CreateProduct";
+import ManageProduct from "./pages/dashboard/manage-product/ManageProduct";
 import { lazy } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
 
 const Auth = lazy(() => import("./pages/auth/Auth"));
 const Home = lazy(() => import("./pages/home/Home"));
@@ -33,6 +36,8 @@ const App = () => {
             <Route path="create-blog" element={<CreateBlog />} />
             <Route path="manage-user" element={<ManageUser />} />
             <Route path="create-user" element={<CreateUser />} />
+            <Route path="create-product" element={<CreateProduct />} />
+            <Route path="manage-product" element={<ManageProduct />} />
           </Route>
         </Route>
       </Routes>

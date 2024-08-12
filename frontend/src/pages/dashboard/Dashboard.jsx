@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { Button, Layout, Menu, theme } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useGetProfileQuery } from "../../context/api/userApi";
-import { useDispatch } from "react-redux";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+
 import { logout } from "../../context/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { useGetProfileQuery } from "../../context/api/userApi";
 
 const { Header, Sider, Content } = Layout;
 
@@ -19,7 +20,6 @@ const Dashboard = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const { data } = useGetProfileQuery();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -59,9 +59,27 @@ const Dashboard = () => {
               ),
               label: "Create blog",
             },
+            {
+              key: "3",
+              icon: (
+                <NavLink to={"create-product"}>
+                  <VideoCameraOutlined />
+                </NavLink>
+              ),
+              label: "Create Product",
+            },
+            {
+              key: "4",
+              icon: (
+                <NavLink to={"manage-product"}>
+                  <VideoCameraOutlined />
+                </NavLink>
+              ),
+              label: "Manage Product",
+            },
             data?.payload?.role === "owner" ? (
               {
-                key: "3",
+                key: "5",
                 icon: (
                   <NavLink to={"manage-user"}>
                     <UserOutlined />
@@ -74,7 +92,7 @@ const Dashboard = () => {
             ),
             data?.payload?.role === "owner" ? (
               {
-                key: "4",
+                key: "6",
                 icon: (
                   <NavLink to={"create-user"}>
                     <VideoCameraOutlined />
